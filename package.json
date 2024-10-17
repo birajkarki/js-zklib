@@ -1,0 +1,31 @@
+{
+  "name": "js-zklib",
+  "version": "1.0.0",
+  "description": "JavaScript module for ZKTeco biometric devices",
+  "main": "zklib.js",
+  "scripts": {
+    "test": "node test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/<your-username>/js-zklib.git"
+  },
+  "keywords": [
+    "zkteco",
+    "zklib",
+    "node-zklib",
+    "attendance-device",
+    "attendance",
+    "biometric-device"
+  ],
+  "author": "Your Name",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/<your-username>/js-zklib/issues"
+  },
+  "homepage": "https://github.com/<your-username>/js-zklib#readme",
+  "dependencies": {
+  "js-zklib": "^1.0.0"
+  }
+}
+

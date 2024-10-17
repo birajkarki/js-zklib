@@ -8,9 +8,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/<your-username>/js-zklib.git"
+    "url": "git+https://github.com/birajkarki/js-zklib.git"
   },
   "keywords": [
+    "js-zklib",
     "zkteco",
     "zklib",
     "node-zklib",
@@ -18,12 +19,12 @@
     "attendance",
     "biometric-device"
   ],
-  "author": "Your Name",
+  "author": "Biraj Karki",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/<your-username>/js-zklib/issues"
+    "url": "https://github.com/birajkarki/js-zklib/issues"
   },
-  "homepage": "https://github.com/<your-username>/js-zklib#readme",
+  "homepage": "https://github.com/birajkarki/js-zklib#readme",
   "dependencies": {
   "js-zklib": "^1.0.0"
   }

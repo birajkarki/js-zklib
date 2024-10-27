@@ -143,18 +143,47 @@ module.exports.decodeUserData72 = (userData)=>{
       return user;
 }
 
-module.exports.decodeRecordData40 = (recordData)=>{
-    const record = {
-        userSn: recordData.readUIntLE(0, 2),
-        deviceUserId: recordData
-        .slice(2, 2+9)
-        .toString('ascii')
-        .split('\0')
-        .shift(),
-        recordTime: parseTimeToDate(recordData.readUInt32LE(27)).toString(),
-      }
-      return record
-}
+module.exports.decodeRecordData40 = (recordData) => {
+  // console.log('Received recordData:', recordData.toString('hex')); // Log complete buffer
+
+  // Update indexes based on your protocol specification
+  const userSnIndex = 0;
+  const deviceUserIdIndex = 2; 
+  const deviceUserIdLength = 9;
+  const verifyTypeIndex = 26; // Verification type byte index
+  const recordTimeIndex = 27; // Start index for the record time
+  const verifyStateIndex = 31; // Verification state byte index
+
+  const record = {
+    userSn: recordData.readUIntLE(userSnIndex, 2),
+    deviceUserId: recordData
+      .slice(deviceUserIdIndex, deviceUserIdIndex + deviceUserIdLength)
+      .toString('ascii')
+      .split('\0')
+      .shift(),
+    verifyType: recordData.readUInt8(verifyTypeIndex),
+    recordTime: parseTimeToDate(recordData.readUInt32LE(recordTimeIndex)).toString(),
+    verifyState: recordData.readUInt8(verifyStateIndex), // Extract the verification state
+  };
+
+  // Optional: map verification state to human-readable terms
+  const verificationStateMap = {
+    0: 'Clock In',
+    1: 'Clock Out',
+    2: 'Break Out',
+    3: 'Break In',
+    4: 'Overtime In',
+    5: 'Overtime Out'
+  };
+
+  record.verifyStateDescription = verificationStateMap[record.verifyState] || 'Unknown';
+
+  console.log('Decoded record:', record); // Log the decoded record for verification
+
+  return record;
+};
+
+
 
 module.exports.decodeRecordData16 = (recordData)=>{
     const record = {
@@ -181,8 +210,18 @@ module.exports.decodeRecordRealTimeLog52 = (recordData) => {
 
   const attTime = parseHexToTime(recvData.subarray(26, 26 + 6));
   const eventType = recvData[25]; // This line assumes eventType is at index 25, confirm if it's correct
+  const eventTypeMap = {
+    0: 'Clock In',
+    1: 'Clock Out',
+    2: 'Break Out',
+    3: 'Break In',
+    4: 'Overtime In',
+    5: 'Overtime Out'
+  };
 
-  return { userId, attTime, eventType };
+  const eventTypeDescription = eventTypeMap[eventType] || 'Unknown'
+
+  return { userId, attTime, eventType, eventTypeDescription };
 };
 
 
